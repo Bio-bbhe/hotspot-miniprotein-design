@@ -42,7 +42,9 @@ passed the benchmark filters.
 | IL-2 | 49 | 121 |
 
 The 120 attempts yielded 468 qualified candidates summed across conditions,
-with 5.83 hours of accounted runtime on one GPU.
+with 5.83 hours of accounted runtime on one GPU. The archived hotspot counts
+used an atom-contact gate. This snapshot uses residue-contact counts and
+fractions.
 
 ## Quick start
 
