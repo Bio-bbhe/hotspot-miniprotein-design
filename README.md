@@ -1,14 +1,16 @@
-# ESMFold2 Mini-Protein Binder Design
+# Hotspot-Guided Miniprotein Design
 
-![ESMFold2-Full prediction of an EGFR domain III complex with the designed mini-binder in teal and the target hotspot in gold.](docs/assets/complex.webp)
+**Design miniproteins for a chosen target surface.** A residue-defined hotspot
+guides scaffold placement and interface selection. Active learning prioritizes
+up to 15 proposals per round for co-folding, and the final candidates come from
+ProteinMPNN redesign. Run without hotspots to explore the target surface.
 
-**Scaffold-based mini-protein design with optional target hotspots.** The pipeline
-places a scaffold against a supplied target structure, generates ProteinMPNN
-sequences, and uses active learning to decide which candidates to co-fold.
+![Two views of a predicted EGFR domain III complex. The target surface is pale gray, the specified epitope is coral, and the designed miniprotein is cobalt.](docs/assets/complex.webp)
 
-The image shows final ProteinMPNN redesign `mpnn_017f451e25bd` from the EGFR
-hotspot benchmark (campaign 004, Full-model seed 45). Chain A is EGFR domain
-III and chain B is the designed binder. [Predicted PDB](examples/egfr/mpnn_017f451e25bd.pdb) ·
+**Design case · EGFR domain III.** The pictured complex is final redesign
+`mpnn_017f451e25bd` from the hotspot benchmark (campaign 004, seed 45).
+Predicted confidence: ipSAE min **0.841**, ipTM **0.958**, binder pLDDT **93.8**.
+[Coordinates](examples/egfr/mpnn_017f451e25bd.pdb) ·
 [PAE matrix](examples/egfr/mpnn_017f451e25bd_pae.npy)
 
 ## Workflow
@@ -105,4 +107,4 @@ python -m unittest discover -s tests -v
 - [Biohub ESMFold2 and ESMC](https://github.com/Biohub/esm)
 - [Dunbrack Lab ipSAE](https://github.com/DunbrackLab/IPSAE)
 - [ProteinMPNN](https://github.com/dauparas/ProteinMPNN)
-- [Companion VHH and antibody design release](https://github.com/Bio-bbhe/vhh-design-esmfold2)
+- [Companion hotspot-guided antibody design release](https://github.com/Bio-bbhe/hotspot-antibody-design)
