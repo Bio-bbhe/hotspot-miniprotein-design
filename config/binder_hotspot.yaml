@@ -1,0 +1,84 @@
+project_name: ESMFold2_MiniBinder
+log_level: INFO
+run_name: binder_hotspot_example
+seed: 42
+
+hotspot:
+  enabled: true
+  binding_region: '11,17,19,42-44,47,49,51-52,79,103,112-113'
+  min_hotspot_residues: 3
+  min_hotspot_fraction: 0.5
+
+paths:
+  target_fasta: data/inputs/target.fasta
+  target_cif_path: data/inputs/target.pdb
+  base_output_dir: runs
+  run_output_dir: ${paths.base_output_dir}/${run_name}
+  scaffold_dir: data/scaffolds
+
+models:
+  esmfold2:
+    variant: full
+    screening_variant: fast
+    final_variant: full
+    esmc_precision: bf16
+    model_path: /data/enzyme_db/model/esmfold2
+    fast_model_path: /data/enzyme_db/model/esmfold2_fast
+    esmc_path: /data/enzyme_db/model/esmc/esmc-6B
+    ccd_cache: /data/enzyme_db/model/esmfold2
+    num_loops: 3
+    num_sampling_steps: 30
+    num_diffusion_samples: 2
+    final_num_diffusion_samples: 1
+    final_num_seeds: 1
+    seed: 42
+    ipsae_pae_cutoff: 10.0
+  esm_engine:
+    model_path: /data/enzyme_db/model/esmc/esmc-6B
+    batch_size: 16
+    truncation_seq_length: 1000
+  proteinmpnn:
+    executable_path: dependencies/ProteinMPNN/protein_mpnn_run.py
+    helper_script_dir: dependencies/ProteinMPNN/helper_scripts
+    model_name: v_48_020
+    chains_to_design: [B]
+    chains_to_keep_fixed_for_mpnn: [A]
+    fixed_pos_distance_threshold: 4.5
+    sampling_temp: 0.5
+    omit_AAs: CX
+  surrogate_model:
+    affinity_metric: composite_affinity
+    developability_metric: binder_plddt
+    save_dir: ${paths.run_output_dir}/surrogate_models
+    params:
+      n_estimators: 100
+      max_depth: 10
+      min_samples_split: 2
+      random_state: 42
+      n_jobs: -1
+
+active_learning:
+  num_iterations: 5
+  candidates_per_iteration: 15
+  embedding_pool_size: 200
+  final_rescore_candidates: 10
+  max_patience: 3
+  point_mutation_iptm: 0.75
+  point_mutants: 200
+  mpnn_mutants: 200
+  initial_mpnn_mutants: 100
+  scaffolds_to_accept: 3
+  poses_per_scaffold: 5
+  final_parent_count: 2
+  final_mpnn_mutants: 100
+  final_keep_per_parent: 5
+
+filters:
+  complex_filters:
+    min_ipsae: 0.60
+    min_iptm: 0.80
+    min_binder_plddt: 0.80
+    max_delta_rmsd: 2.0
+    final_fixed_distance: 4.0
+    final_sampling_temp: 0.1
+
