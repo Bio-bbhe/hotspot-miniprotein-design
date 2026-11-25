@@ -5,7 +5,7 @@ guides scaffold placement and interface selection. Active learning prioritizes
 up to 15 proposals per round for co-folding, and the final candidates come from
 ProteinMPNN redesign. Run without hotspots to explore the target surface.
 
-![Two views of a predicted EGFR domain III complex. The target surface is pale gray, the specified epitope is coral, and the designed miniprotein is cobalt.](docs/assets/complex.webp)
+![Predicted EGFR domain III complex with a gray target, coral epitope, and cobalt miniprotein. ipSAE min 0.841, ipTM 0.958, and binder pLDDT 93.8.](docs/assets/complex.webp)
 
 **Design case · EGFR domain III.** The pictured complex is final redesign
 `mpnn_017f451e25bd` from the hotspot benchmark (campaign 004, seed 45).
